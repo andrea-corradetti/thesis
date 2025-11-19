@@ -1,0 +1,151 @@
+\documentclass{article}
+
+% --- Recommended Packages ---
+\usepackage{amsmath}   % For advanced math environments (e.g., align)
+\usepackage{amssymb}   % For mathematical symbols (e.g., \mathbb, \mathcal)
+\usepackage{amsthm}   % For theorem environments
+
+% --- Document Setup ---
+\title{Notes}
+\author{Andrea Corradetti}
+\date{\today}
+
+% --- Theorem Environments (optional, but standard in theory papers) ---
+\newtheorem{theorem}{Theorem}[section] % Theorems are numbered by section
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+% --- Custom Commands (Example) ---
+\newcommand{\N}{\mathbb{N}} % Natural numbers
+\newcommand{\Z}{\mathbb{Z}} % Integers
+\newcommand{\R}{\mathbb{R}} % Real numbers
+\newcommand{\Ptime}{\text{P}} % Complexity class P
+\newcommand{\NP}{\text{NP}}   % Complexity class NP
+\newcommand{\Onotation}{\mathcal{O}} % Big O notation
+
+\usepackage{xcolor}
+\newcommand\todo[1]{\textcolor{red}{#1}}
+
+\begin{document}
+\maketitle
+\tableofcontents % Creates a table of contents
+
+\section{Background}
+In this section, we define the category of efficiently computable sets and functions, denoted as $\mathbf{Eff}$, and the category of metric spaces and non-expanding maps, denoted as $\mathbf{Met}$.
+
+\begin{definition}
+  \label{ def:eff }
+  \todo{Define the category $\mathbf{Eff}$ of efficiently computable sets and functions.}
+\end{definition}
+
+\begin{definition}
+  \label{ def:ncomb }
+  \todo{Define the category $\mathrm{ncomb}(\mathbf{Eff})$ of n-combs over $\mathbf{Eff}$.}
+\end{definition}
+
+% \begin{remark}
+%   \label{ rem:ncomb }
+%   \todo{Explain that the unit is an empty tuple and combs $I \to (A, B)$ are just morphisms $A \to B$}
+% \end{remark}
+
+\section{New stuff}
+
+
+\subsection{Distinguishers}
+
+\begin{definition}
+  \label{ def:distinguisher-goldreich }
+  \todo{Define the distinguisher as in Goldreich's book.}
+\end{definition}
+
+\begin{definition}
+  \label{ def:distinguisher }
+  A distinguisher in $\textrm{\textup{n-comb}}(\mathbf{Eff})$ for a resource ${(f_n: A_n \to B_n)_{n \in \mathbb N }}$ is a comb $D: (A_n \to B_n)_{n \in \mathbb N} \to (I \to \mathbb B)_{n \in \mathbb N}$.
+  i.e. a morphism $\xi_0 := (\xi_{0_n}: I \to A_n \otimes Z)_{n \in \N}$ and a morphism $\xi_1 := (\xi_{1_n}: B_n \otimes Z \to \mathbb B)_{n \in \N}$ in $\mathbf{Eff}$.
+\end{definition}
+
+\begin{remark}
+  \label{ rem:distinguisher }
+  A slotted distinguisher is a sequence of morphisms $(I \to \mathbb{B})_{n \in \N }$ which can be thought of as sampling booleans from some distribution.
+\end{remark}
+
+
+\begin{definition}
+  \label{ def:met }
+  \todo{Define the category of metric spaces and non-expanding maps $\mathbf{Met}$.}
+\end{definition}
+
+
+Consider $[ \mathbb N , \textbf{Met}]$, the category of functors from the discrete category $\mathbb N$ to the category of metric spaces and non expanding maps.
+We enrich $\textrm{n-comb}(\mathbf{Eff})$ over $[ \mathbb N , \textbf{Met}]$.
+Given the functor $\textrm{n-comb}(\mathbf{Eff}) \xrightarrow{\mathrm{Hom}(I, -)} [\mathbb N , \mathbf{Met}]$,
+the objects of the category of elements $\int \mathrm{Hom}(I, -)$ are the states of n-comb($\mathbf{Eff}$), i.e. just (tuples of) morphisms of $\mathbf{Eff}$.
+
+
+\begin{definition}
+  \label{ def:metric-on-states }
+  \todo{Define a concrete metric on states?}
+\end{definition}
+
+
+\begin{definition}
+  \label{ def:computational-indistinguishability }
+  \todo{There is no n on the distinguisher. Types are weird}
+  Two states $f$ and $g$ in $\mathrm{ncomb}(\mathbf{Eff})$ are computationally indistinguishable if for every distinguisher $D$,
+  there exists a negligible function $\epsilon$ such that, for all sufficiently large $n$, $f_n$ and $g_n$ are $\epsilon(n)$-close i.e.
+
+  \[
+    d_n(D \circ f_n, D \circ g_n) \leq \epsilon(n)
+  \]
+
+\end{definition}
+
+\subsection{Pseudorandomness}
+\todo{Define pseudorandomness as in goldreich. Define uniform ensenmble. Characterize pseudorandomness as distance from the uniform distribution.}
+
+\begin{example}
+  \label{ ex:pseudorandom }
+  Let $PRG := (\mathrm{PRG}_n: \mathbb{B}^n \to \mathbb{B}^{\ell(n)})_{n \in \mathbb N }$ where $\ell$ is a non-trivial expansion factor.
+  Let $U^\ell := (U^\ell_n: I \to \mathbb{B}^{\ell(n)})_{n \in \mathbb N }$ be the uniform ensemble of length $\ell(-)$.
+
+  $PRG$ is a pseudorandom generator if for all distinguishers $D$,
+
+  \[
+    \todo{\text{Add string diagrams?}}
+  \]
+
+  for some negligible function $\epsilon$ and sufficiently large $n$.
+
+\end{example}
+
+
+
+
+\section{The category $\mathrm{Comp}$ of complexity classes}
+
+\begin{definition}
+  \label{ def:comp }
+  Let $\mathcal F$ be the set of all non-negative, non-decreasing functions from $\mathbb N$ to $\mathbb R$.
+  Define a relation $\sim$ on $\mathcal F$ as follows: for $f, g \in \mathcal F$, we say that $f \sim g$ if $f = \Theta(g)$.
+
+  The category $\mathrm{Comp}$ of complexity classes is defined as follows:
+  Our objects are the equivalence classes of $\mathcal F$ under the relation $\sim$.
+  We denote the equivalence class of a function $f$ by $\Theta(f)$.
+  Given two objects $\Theta(f)$ and $\Theta(g)$, there is a morphism  $\succeq: \Theta(f) \to \Theta(g)$ if and only if $g = O(f)$ (i.e. f dominates g).
+  Moreover, + acts as the monoidal product on $\mathrm{Comp}$, i.e. ${\Theta(f) \otimes \Theta(g) := \Theta(f + g)}$, with unit $\Theta(1)$.
+
+\end{definition}
+
+\begin{remark}
+  \label{ rem:comp }
+  The category is cartesian and the unit object is strictly terminal.
+\end{remark}
+
+\bibliographystyle{plain} % Standard citation style
+\bibliography{references} % Assumes you have a file named 'references.bib'
+
+\end{document}
